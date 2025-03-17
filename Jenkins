@@ -1,0 +1,17 @@
+pipeline { 
+    agent any
+    stages {
+        stage("Build") {
+            steps {
+                sh "yarn install"
+                sh "yarn build"
+            }
+        }    
+        stage("Deploy") {
+            steps {
+                sh "pm2 restart application || pm2 start yarn --name application -- start -p 4040"
+                
+            } 
+        }    
+    }
+}
